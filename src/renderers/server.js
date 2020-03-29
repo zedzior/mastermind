@@ -9,7 +9,7 @@ export async function serverRenderer() {
   };
 
   const pageData = {
-    title: `Hello ${initialData.appName}`,
+    title: 'Memory Game',
   };
 
   return Promise.resolve({

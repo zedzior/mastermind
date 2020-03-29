@@ -1,13 +1,35 @@
-$main: #555;
+// $main: #555;
 
-*,
-*:before,
-*:after {
-  box-sizing: border-box;
-}
+// *,
+// *:before,
+// *:after {
+//   box-sizing: border-box;
+// }
+
+// body {
+//   #root {
+//     color: $main;
+//   }
+// }
 
 body {
-  #root {
-    color: $main;
-  }
+  text-align: center;
+}
+
+.board {
+  padding: 2px;
+  padding-top: 4px;
+  max-width: 175px;
+  display: inline-block;
+}
+
+.puzzle {
+  width: 40px;
+  height: 20px;
+  margin: 0.5px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  max-width: 50px;
+  display: inline-block;
+  border: thin solid black;
 }
