@@ -5,9 +5,12 @@ const Puzzle = (props) => {
   return (
     <div className='puzzle'
       onClick={() => props.onClick(props.index, props.number)}
-      style={{ backgroundColor: colors[props.status(props.index, props.number)] }}
+      style={{
+        backgroundColor: puzzStyle[props.status(props.index, props.number)]['back'],
+        color: puzzStyle[props.status(props.index, props.number)].font,
+      }}
     >
-      {props.number}
+      {puzzSymbol[props.number]}
     </div>
   );
 };
@@ -18,12 +21,12 @@ const Game = (props) => {
   const [pairVal, setPairVal] = useState([]);
   const [matched, setMatched] = useState([]);
   const [lock, setLock] = useState(false);
+  const [score, setScore] = useState(0);
 
   useEffect(() => {
-    //if locked, wiat one second and unlock and clear pair arrays
+    //if locked, wait one second then unlock and clear pair arrays
     if (lock == true) {
       setTimeout(() => {
-        console.log('...');
         setLock(false);
         setPairVal([]);
         setPairId([]);
@@ -53,6 +56,9 @@ const Game = (props) => {
       //lock game for a while, when 2 puzzles are opened
       if (pairId.length == 1) {
         setLock(true);
+        //count clicks
+        const newScore = score + 1;
+        setScore(newScore);
       }
       //add clicked buttons to pair arrays
       setPairId(newPairId);
@@ -85,19 +91,53 @@ const Game = (props) => {
             onClick={puzzClick}
           />)}
       </div>
+      <div className='score'>
+        Score {score}
+      </div>
+      <button className='newGame'
+        onClick={props.newGame}>
+        New Game
+      </button>
     </>
   );
 };
 
-const colors = {
-  matched: 'green',
-  open: 'white',
-  hidden: 'grey',
+const puzzStyle = {
+  matched: {
+    back: 'white',
+    font: 'black',
+  },
+  open: {
+    back: 'white',
+    font: 'black',
+  },
+  hidden: {
+    back: 'grey',
+    font: 'grey',
+  },
+};
+
+const puzzSymbol = {
+  1: 'X',
+  2: 'O',
+  3: '@',
+  4: '%',
+  5: '-',
+  6: '_',
+  7: '?',
+  8: '|',
+};
+
+const Session = () => {
+  const [gameId, setGameId] = useState(1);
+  const range = utils.getRandomPairs(1, 8);
+  return (
+    <Game range={range} key={gameId} newGame={() => setGameId(gameId + 1)} />
+  );
 };
 
 export function App() {
-  const range = utils.getRandomPairs(1, 8);
   return (
-    <Game range={range} />
+    <Session />
   );
 }

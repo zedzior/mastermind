@@ -32,4 +32,9 @@ body {
   max-width: 50px;
   display: inline-block;
   border: thin solid black;
+  user-select: none;
+}
+
+.newGame {
+  margin-top: 10px;
 }
